@@ -1,0 +1,4 @@
+name: FenglinServerTracker
+version: '1.0-SNAPSHOT'
+main: com.sakulin.Tracker
+api-version: '1.18'
