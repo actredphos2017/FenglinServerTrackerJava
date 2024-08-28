@@ -10,6 +10,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.net.InetSocketAddress;
 
@@ -23,7 +24,7 @@ public final class Tracker extends JavaPlugin implements Listener {
     public void onEnable() {
         getLogger().info("Tracker enabled");
 
-        String hostname = "127.0.0.1";
+        String hostname = "0.0.0.0";
         int port = 8887;
 
         pluginManager = getServer().getPluginManager();
@@ -32,7 +33,24 @@ public final class Tracker extends JavaPlugin implements Listener {
         getLogger().info("WebSocket Service Start! Host: " + hostname + " Port: " + port);
 
         messenger = new WebsocketMessenger(new InetSocketAddress(hostname, port), getLogger());
-        messenger.addListener(message -> getLogger().info("Websocket message received: " + message));
+        messenger.addListener(new OperationHandler(getLogger(), new OperationHandler.ServerFunctionHandler() {
+            @Override
+            public void runCommand(String cmd) {
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        getServer().dispatchCommand(getServer().getConsoleSender(), cmd);
+                    }
+                }.runTask(Tracker.this);
+            }
+
+            @Override
+            public void broadcast(String msg) {
+                getServer().broadcastMessage(msg);
+            }
+        }));
+        messenger.addListener((message, sender) -> getLogger().info( sender + "'s Websocket message received: " + message));
+
         messenger.start();
     }
 
