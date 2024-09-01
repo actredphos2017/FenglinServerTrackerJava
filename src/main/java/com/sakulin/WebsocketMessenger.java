@@ -51,11 +51,11 @@ public class WebsocketMessenger extends WebSocketServer implements Messenger {
 
     @Override
     public void onMessage(WebSocket webSocket, String s) {
-        logger.info(webSocket.getRemoteSocketAddress() + "'s Message received: " + s);
+//        logger.info(webSocket.getRemoteSocketAddress() + "'s Message received: " + s);
         try {
             listeners.forEach((e) -> e.onMessageReceived(s, webSocket.getRemoteSocketAddress().getHostString(), this));
         } catch (JsonSyntaxException e) {
-            logger.warning("Parse Upon Message Meet Json Syntax Exception!");
+//            logger.warning("Parse Upon Message Meet Json Syntax Exception!");
         }
     }
 

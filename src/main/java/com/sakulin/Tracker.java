@@ -2,7 +2,6 @@ package com.sakulin;
 
 import com.sakulin.models.PlayerInfo;
 import com.sakulin.models.SimpleMessage;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -78,7 +77,7 @@ public final class Tracker extends JavaPlugin implements Listener {
                 return getServer().getBannedPlayers().stream().map(PlayerInfo::valueOf).toArray(PlayerInfo[]::new);
             }
         }));
-        messenger.addListener((message, sender, messenger) -> getLogger().info(sender + "'s Websocket message received: " + message));
+//        messenger.addListener((message, sender, messenger) -> getLogger().info(sender + "'s Websocket message received: " + message));
 
         messenger.start();
     }
