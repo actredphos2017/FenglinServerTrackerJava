@@ -2,6 +2,7 @@ package com.sakulin;
 
 import com.sakulin.models.PlayerInfo;
 import com.sakulin.models.SimpleMessage;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
